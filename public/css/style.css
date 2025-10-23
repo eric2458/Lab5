@@ -1,3 +1,32 @@
-body{
-    background-color: forestgreen;
+/* body{
+    text-align: center;
+} */
+#info{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 5px;
+    padding: 5px;
 }
+/*5*/
+h1{
+    align-items: center;
+    color: black;
+}
+/* 7 */
+h2{
+    color: black;
+}
+/* 8 */
+#text{
+    color: black;
+}
+/* 9 */
+footer{
+    color:  black;
+}
+/* 10 */
+body{
+    background-color: green;
+}
+/* 11 */

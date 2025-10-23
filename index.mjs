@@ -1,39 +1,48 @@
-import fetch from 'node-fetch';
 import express from 'express';
 const solarSystem = (await import('npm-solarsystem')).default;
+import fetch from 'node-fetch';
+
 const app = express();
+
 app.set("view engine", "ejs");
+//store img and css static files in file public
 app.use(express.static("public"));
+
+//routes
 //root route
-
 app.get('/', async (req, res) => {
-    let url= "https://pixabay.com/api/?key=5589438-47a0bca778bf23fc2e8c5bf3e&per_page=50&orientation=horizontal&q=solar%20system";
-    let response= await fetch(url);
-    let data=await response.json();
-    console.log(data);
-    let randomImage = data.hits[0].webformatURL;
-    res.render('home.ejs',{randomImage})
+    let url = "https://pixabay.com/api/?key=5589438-47a0bca778bf23fc2e8c5bf3e&per_page=50&orientation=horizontal&q=solar%20system"
+    let respone = await fetch(url);
+    let data = await respone.json();
+    let i = Math.floor(Math.random()*50);
+    let img = data.hits[i].webformatURL;
+    console.log(img)
+    res.render('home.ejs', {img});
 });
-//All planets
-app.get('/planet', (req, res) => {
-    let planet_name= req.query.planetName;
-    let planetInfo = solarSystem[`get${planet_name}`]();    
-    console.log(planetInfo)
-    res.render('planetInfo.ejs',{planetInfo,planet_name})
+app.get('/NASA_POD',(req, res) => {
+    res.render('nasaPod.ejs');
+});
+//planet route
+app.get('/planet',(req, res) => {
+    let planet_Name = req.query.planetName;
+    let planetInfo = solarSystem[`get${planet_Name}`]();
+    console.log(planetInfo);
+    res.render('planetInfo.ejs', {planetInfo, planet_Name});
+});
+app.get('/mars',(req, res) => {
+    let planet_Name = req.query.planetName;
+    let planetInfo = solarSystem[`get${planet_Name}`]();
+    console.log(planetInfo);
+    res.render('mars.ejs', {planetInfo, planet_Name});
+});
+app.get('/jupiter',(req, res) => {
+    let planet_Name = req.query.planetName;
+    let planetInfo = solarSystem[`get${planet_Name}`]();
+    console.log(planetInfo);
+    res.render('jupiter.ejs', {planetInfo, planet_Name});
 });
 
-//mercury route
-app.get('/mercury', (req, res) => {
-    let planetInfo = solarSystem.getMercury();
-    console.log(planetInfo)
-    res.render('mercury.ejs',{planetInfo})
-});
-//venus route
-app.get('/venus', (req, res) => {
-    let planetInfo = solarSystem.getVenus();
-    console.log(planetInfo)
-    res.render('venus.ejs',{planetInfo})
-});
+//starts the web server
 app.listen(3000, () => {
    console.log('server started');
 });
